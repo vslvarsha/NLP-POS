@@ -18,6 +18,7 @@ def getTagCount(tagged_data):
         tag = word[word.rfind('/')+1:]
         if tag not in tag_count:
             tag_count[tag] = 1
+            print str(tag)
         else:
             tag_count[tag] += 1
     return tag_count
@@ -94,9 +95,7 @@ def main():
         f1 = sys.argv[1]
         fin = open(f1, 'r')'''
 
-    #fin = open('catalan_corpus_train_tagged.txt','r')
-    fin = open('kannada_coprus_train_tagged.txt','r')
-    #fin = open('kannada_coprus_train_tagged.txt','r')
+    fin = open('kannada_corpus_train_tagged.txt','r')
 
     tagged_data = getTaggedData(fin)
     #print tagged_data
@@ -107,11 +106,11 @@ def main():
     fin.seek(0)
     raw_data = fin.readlines()
     transition_probability = getTransitionProbability(raw_data, tag_count)
-    print transition_probability
+    #print transition_probability
     emission_probability = getEmissionProbability(tagged_data, tag_count)
-    print emission_probability
+    #print emission_probability
 
-    fout = open('hmmmodel.txt','w')
+    fout = open('hmmmodel1.txt','w')
     fout.write(str(tag_count))
     fout.write('\n')
     fout.write(str(emission_probability))
