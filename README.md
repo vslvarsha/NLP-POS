@@ -1,1 +1,1 @@
-# NLP-POS
+# Cross Language POS tagger for Kannada using Telugu
