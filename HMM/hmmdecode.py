@@ -5,7 +5,7 @@ import ast
 import operator
 
 def POStagging(data,t,e,count):
-    fout = open('hmmoutput.txt', 'w+')
+    fout = open('hmmoutput1.txt', 'w+')
     for line in data:
         state = 0
         value = 0
@@ -110,13 +110,22 @@ def POStagging(data,t,e,count):
 
 
 def F1_score(tags,predicted):
-    divide = len(tags)
-    tags = set(tags)
-    predicted = set(predicted)
-
-    accuracy = len(tags.intersection(predicted))/float(divide)
-
-    return (1-accuracy)
+    print len(tags)
+    print len(predicted)
+    if len(tags) == len(predicted):
+        count = 0
+        divide = len(tags)
+        for i, j in zip(tags, predicted):
+            if i == j:
+                count += 1
+            if j == 'UNK':
+                divide = divide -1
+        print count
+        print divide
+        accuracy = count * 1.0 / divide
+        print accuracy
+    else:
+        print "OH-OH"
 
 def main():
     start = time.clock()
@@ -128,7 +137,6 @@ def main():
 
     #reading untagged data
     fin = open('kannada_corpus_dev_raw.txt','r')
-    #fin = open('catalan_corpus_dev_raw.txt', 'r')
     untagged_data = fin.readlines()
     fin.close()
 
@@ -146,17 +154,21 @@ def main():
 
     tag = []
     predicted = []
+    temp1 = []
+    temp2 = []
     fout  = open('junk.txt','w')
-    f1 = open('kannada_corpus_dev_tagged.txt', 'r')
+    f1 = open('kannada_corpus_dev_tagged1.txt', 'r')
     dev_tagged = f1.readlines()
     for line in dev_tagged:
         words = line.split()
+        temp1.append(len(words))
         for word in words:
             tag.append(word[word.rfind('/')+1:])
-    f2 = open('hmmoutput.txt', 'r')
+    f2 = open('hmmoutput1.txt', 'r')
     train_tagged = f2.readlines()
     for line in train_tagged:
         words = line.split()
+        temp2.append(len(words))
         for word in words:
             predicted.append(word[word.rfind('/') + 1:])
     fout.write(str(tag))
